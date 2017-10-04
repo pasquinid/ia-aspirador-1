@@ -2,7 +2,7 @@ from Ambiente import Ambiente
 class Estado:
 
 	def copy(self,Amb):
-		novo_amb = Ambiente(int(Amb.getQuadrados()))
+		novo_amb = Ambiente(int(Amb.getQuadrados()),Amb)
 		count = 0
 
 		for l in Amb.getLocais():

@@ -1,6 +1,7 @@
 from Quadrado import Quadrado
 import math
 import copy
+import random
 
 class Ambiente:
 	locais = []
@@ -23,9 +24,13 @@ class Ambiente:
 
 		rx = range(tam_x)
 		ry = range(tam_y)
-		
-		for x in rx:
-			for y in ry:
-				q = Quadrado(True,x,y)
-				self.locais.append(q)
 
+		self.locais = [Quadrado(True,1,1) for i in range(10)]
+		
+		count = 0 
+		for x in rx:
+			for y in ry:				
+				self.locais[count].x = x
+				self.locais[count].y = y
+				self.locais[count].sujo = random.choice([True, False])
+				count = count + 1
