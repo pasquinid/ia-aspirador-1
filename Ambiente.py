@@ -5,8 +5,15 @@ import random
 
 class Ambiente:
 	locais = []
+
 	num_quadrados = 0
 	ambiente_pai = []
+
+	def getLocal_especifico(self,x,y):
+		for i in self.locais:
+			if(i.x == x and i.y == y):
+				return i
+
 	def getLocais(self):
 		return list(self.locais)
 
@@ -25,7 +32,7 @@ class Ambiente:
 		rx = range(tam_x)
 		ry = range(tam_y)
 
-		self.locais = [Quadrado(True,1,1) for i in range(10)]
+		self.locais = [Quadrado(True,1,1) for i in range(num_quadrados)]
 		
 		count = 0 
 		for x in rx:

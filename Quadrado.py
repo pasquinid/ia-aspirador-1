@@ -1,5 +1,5 @@
 class Quadrado:
-	sujo = False
+	sujo = False  # True = tem sujeira , False = nao tem sujeira
 	x = 0
 	y = 0
 	
@@ -9,4 +9,4 @@ class Quadrado:
 		self.y = ys
 
 	def limpa(self):
-		self.sujo = True
+		self.sujo = False
