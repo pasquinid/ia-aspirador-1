@@ -1,4 +1,5 @@
 from Ambiente import Ambiente
+
 class Estado:
 	estados_possiveis = []
 	estado_pai = []

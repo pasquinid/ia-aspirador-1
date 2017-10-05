@@ -1,14 +1,17 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 import Estado
 
 """
-    Classe responsavel pela busca em largura no agente aspirador de pó
+    Classe responsavel pela busca em largura no agente aspirador de po
 """
 class Largura(object):
     borda = []
     nos_coloridos = []
 
     """
-        Method: Inicialização
+        Method: Inicializacao
         arguments: raiz
         Inicializa a lista da borda começando pela raiz
     """
@@ -32,6 +35,8 @@ class Largura(object):
     """
 
     def no_explorado(self):
-        no_explorar = self.borda.pop(0)
-        self.nos_coloridos.append(no_explorar)
-        return no_explorar
+        if(self.borda != []):
+            no_explorar = self.borda.pop(0)
+            self.nos_coloridos.append(no_explorar)
+            return no_explorar
+        return None

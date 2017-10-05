@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 
 """
     Classe responsavel pela busca em profundidade no agente aspirador de pó
@@ -29,6 +31,6 @@ class Profundidade(object):
         Adciona no(Proximo estado) na lista de nós coloridos e o retorna para ser verificado se é objetivo e se não for, ser explorado e gerar novos estados possiveis
     """
     def no_explorado(self):
-        no_explorado = self.borda.pop(-1)
+        no_explorado = self.borda.pop()
         self.nos_coloridos.append(no_explorado)
         return no_explorado
