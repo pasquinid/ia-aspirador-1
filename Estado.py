@@ -109,7 +109,8 @@ class Estado:
 
 	def visualizar_estado(self,est):
 		for e in est.atual.locais:
-			print "[ x:"+str(e.x)+" y: "+str(e.y)+" sujo: "+str(e.sujo)+" ]"	
+			print "[ x:"+str(e.x)+" y: "+str(e.y)+" sujo: "+str(e.sujo)+" ]"
+		print "[Agente: x:" +str(est.pos_x)+ " y:" + str(est.pos_y) + "]\n"
 
 	def visualizar_estado_atual(self):
 		for e in self.atual.locais:
