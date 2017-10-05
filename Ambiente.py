@@ -33,11 +33,13 @@ class Ambiente:
 		self.rx = range(tam_x)
 		self.ry = range(tam_y)
 
-		self.locais = [Quadrado(True,1,1) for i in range(num_quadrados)]
+		self.locais = [Quadrado(True,0,0) for i in range(num_quadrados)]
 		
 		count = 0 
 		for x in self.rx:
-			for y in self.ry:				
+			print "ambiente.. x= "+str(x)
+			for y in self.ry:
+				print "ambiente.. y= "+str(y)
 				self.locais[count].x = x
 				self.locais[count].y = y
 				self.locais[count].sujo = random.choice([True, False])
