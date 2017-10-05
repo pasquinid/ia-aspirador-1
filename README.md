@@ -1,1 +1,0 @@
-# ia-aspirador-1
