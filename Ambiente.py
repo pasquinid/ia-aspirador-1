@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 from Quadrado import Quadrado
 import math
 import copy
@@ -7,8 +10,6 @@ class Ambiente:
 	locais = []
 
 	num_quadrados = 0
-	
-
 
 	def getLocal_especifico(self,x,y):
 		for i in self.locais:
