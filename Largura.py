@@ -38,6 +38,5 @@ class Largura(object):
         if(self.borda != []):
             no_explorar = self.borda.pop(0)
             self.nos_coloridos.append(no_explorar)
-            print len(self.nos_coloridos)
             return no_explorar
         return None

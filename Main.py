@@ -4,6 +4,7 @@
 from Estado import Estado
 from Largura import Largura
 from Profundidade import Profundidade
+from Astar import Astar
 
 
 """
@@ -11,7 +12,7 @@ from Profundidade import Profundidade
     Param: estado_possivel, borda
     Verifica se estado_possivel já existe na borda
 """
-def estado_existe(estado_possivel, borda):
+def estado_existe(estado_possivel, borda, coloridos, star):
     #Acessando os quadrados do estado possivel para comparação
     lst_locais_estado_possivel = estado_possivel.atual.locais
     for estado_borda in borda:
@@ -32,11 +33,19 @@ def estado_existe(estado_possivel, borda):
 
         #Verificando se o estado é realmente igual até na posição do agente
         pos_agente = estado_borda.pos_x == estado_possivel.pos_x and estado_borda.pos_y == estado_possivel.pos_y
-        print "X: " + str(pos_x) + " Y:" + str(pos_y) + " SUJO: " + str(sujo) + " agente: " + str(pos_agente)
+        #print "X: " + str(pos_x) + " Y:" + str(pos_y) + " SUJO: " + str(sujo) + " agente: " + str(pos_agente)
         if cont == len(lst_locais_borda) and pos_agente:
-            print "\nTRUE"
+            # print "\nTRUE"
+            #verifica se o no pertence a borda
+            if(coloridos == 0 and star == 1):
+                #se o custo do estado possivel for menor que o custo do estado presente na borda, atualiza as informações
+                if(estado_borda.f  > estado_possivel.f):
+                    estado_borda.estado_pai = estado_possivel.estado_pai
+                    estado_borda.h = estado_possivel.h
+                    estado_borda.g = estado_possivel.g
+                    estado_borda.f = estado_possivel.f
             return True
-    print "\nFALSE"
+    #print "\nFALSE"
     return False
 
 def mostra_caminho(nos_coloridos):
@@ -51,10 +60,8 @@ def mostra_caminho(nos_coloridos):
         return
     else:
         caminho.append(no_objetivo)
-        #no_objetivo.visualizar_estado(no_objetivo)
 
         while(no_objetivo.getPai() != None):
-            #no_objetivo.getPai().visualizar_estado(no_objetivo.getPai())
             caminho.append(no_objetivo.getPai())
             no_objetivo = no_objetivo.getPai()
 
@@ -71,7 +78,7 @@ def mostra_expandidos(nos_coloridos):
     for no_colorido in nos_coloridos:
         no_colorido.visualizar_estado(no_colorido)
 
-def processa_nos(busca):
+def processa_nos(busca, astar):
     #Enquanto a borda não estiver vazia
     while(busca.borda != []):
         no_explorado = busca.no_explorado()
@@ -84,53 +91,48 @@ def processa_nos(busca):
                 print "[ERRO] Não foi possivel econtrar a solução"
                 break
             #Gera todos os estados possiveis a partir do no explorado
-            print "NÓ A SER EXPANDIDO"
-            no_explorado.visualizar_estado(no_explorado)
+            # print "NÓ A SER EXPANDIDO"
+            # no_explorado.visualizar_estado(no_explorado)
             lst_estados_possiveis = no_explorado.explora_no()
-            print "Visualizando estados possiveis\n"
-            for index in lst_estados_possiveis:
-                index.visualizar_estado(index)
+            # print "Visualizando estados possiveis\n"
+            # for index in lst_estados_possiveis:
+            #     index.visualizar_estado(index)
             #Inserção dos nós na borda    
             for estado in lst_estados_possiveis:
                 show = False
-                if(estado.verifica_objetivo()):
-                    print "Objetivo encontrado"
-                    show = True
-                if(estado_existe(estado, busca.nos_coloridos)):
-                    if show:
-                        print "Deu erro aqui coloridos"
-                        estado.visualizar_estado(estado)
-                        print "====Nos coloridos======"
-                        ta_errado = estado_existe(estado, busca.nos_coloridos)
-                        mostra_expandidos(busca.nos_coloridos)
-                        return
+                if(estado_existe(estado, busca.nos_coloridos, 1, astar)):
                     continue
-                if estado_existe(estado, busca.borda):
+                if estado_existe(estado, busca.borda, 0, astar):
                    pass
                 else:
                     busca.add_borda(estado)
 
     #Imprime o caminho
-    print "========== Mostrando nos expandidos ============"
-    mostra_expandidos(busca.nos_coloridos)
+    # print "========== Mostrando nos expandidos ============"
+    # mostra_expandidos(busca.nos_coloridos)
 
     print "=========Mostrando Caminho ====================="
     mostra_caminho(busca.nos_coloridos)
 
 def main():
-    estado_inicial = Estado(2, 0, 0)
+    estado_inicial = Estado(4, 0, 0)
     print "Visualizando estado criado\n"
     estado_inicial.visualizar_estado(estado_inicial)
 
     largura = Largura(estado_inicial)
 
     print "=======Busca em largura=========\n"
-    processa_nos(largura)
+    processa_nos(largura, 0)
 
     profundidade = Profundidade(estado_inicial)
 
     print "======Busca em Profundidade=====\n"
-    processa_nos(profundidade)
+    processa_nos(profundidade, 0)
+
+    astar = Astar(estado_inicial)
+    print "======Busca Astar=================\n"
+    processa_nos(astar, 1)
+
 
 
 if __name__ == '__main__':

@@ -3,6 +3,10 @@ from Ambiente import Ambiente
 class Estado:
 	estados_possiveis = []
 	estado_pai = []
+	f = 0
+	g = 0
+	h = 0
+
 	def explora_no(self):  # visualizar os estados possiveis a partir do atual
 		
 		self.estados_possiveis = [] # limpando os estados possiveis para que nao tenha conteudo de um no anterior
@@ -13,30 +17,45 @@ class Estado:
 				est_auxiliar.atual = self.copy(self.atual) # sim , entao copia o estado (ambiente) atual e..
 				est_auxiliar.atual.getLocal_especifico(self.pos_x,self.pos_y).limpa() # e limpa o meu quadrado nesse estado possivel gerado (est_aux)
 				est_auxiliar.setPai(self)
+				est_auxiliar.h = est_auxiliar.calcula_heuristica()
+				est_auxiliar.g = self.g + 1
+				est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
 				self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 
 		if(self.atual.getLocal_especifico(self.pos_x+1,self.pos_y) != None):
 			est_auxiliar = Estado(self.atual.num_quadrados,self.pos_x+1,self.pos_y)
 			est_auxiliar.atual = self.copy(self.atual) # sim , entao copia o estado (ambiente) atual e..
 			est_auxiliar.setPai(self)
+			est_auxiliar.h = est_auxiliar.calcula_heuristica()
+			est_auxiliar.g = self.g + 1
+			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 
 		if(self.atual.getLocal_especifico(self.pos_x-1,self.pos_y) != None):
 			est_auxiliar = Estado(self.atual.num_quadrados,self.pos_x-1,self.pos_y)
 			est_auxiliar.atual = self.copy(self.atual) # sim , entao copia o estado (ambiente) atual e..
 			est_auxiliar.setPai(self)
+			est_auxiliar.h = est_auxiliar.calcula_heuristica()
+			est_auxiliar.g = self.g + 1
+			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 		
 		if(self.atual.getLocal_especifico(self.pos_x,self.pos_y+1) != None):	
 			est_auxiliar = Estado(self.atual.num_quadrados,self.pos_x,self.pos_y+1)
 			est_auxiliar.atual = self.copy(self.atual) # sim , entao copia o estado (ambiente) atual e..
 			est_auxiliar.setPai(self)
+			est_auxiliar.h = est_auxiliar.calcula_heuristica()
+			est_auxiliar.g = self.g + 1
+			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 		
 		if(self.atual.getLocal_especifico(self.pos_x,self.pos_y-1) != None):
 			est_auxiliar = Estado(self.atual.num_quadrados,self.pos_x,self.pos_y-1)
 			est_auxiliar.atual = self.copy(self.atual) # sim , entao copia o estado (ambiente) atual e..
 			est_auxiliar.setPai(self)
+			est_auxiliar.h = est_auxiliar.calcula_heuristica()
+			est_auxiliar.g = self.g + 1
+			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 
 		return self.estados_possiveis
@@ -111,7 +130,8 @@ class Estado:
 	def visualizar_estado(self,est):
 		for e in est.atual.locais:
 			print "[ x:"+str(e.x)+" y: "+str(e.y)+" sujo: "+str(e.sujo)+" ]"
-		print "[Agente: x:" +str(est.pos_x)+ " y:" + str(est.pos_y) + "]\n"
+		print "[Agente: x:" +str(est.pos_x)+ " y:" + str(est.pos_y) + "]"
+		print "[F:" + str(self.f) + " G: " + str(self.g) + " H:" +str(self.h) + " ]\n"
 
 	def visualizar_estado_atual(self):
 		for e in self.atual.locais:
@@ -133,9 +153,21 @@ class Estado:
 				novo_amb.locais[count].sujo = False
 			count = count + 1
 		return novo_amb
+	
+
+	def calcula_heuristica(self):
+		count = 0
+		for local in self.atual.locais:
+			if(local.sujo == True):
+				count = count + 1
+		self.h = count
+		return count
 
 	def __init__(self,num_quadrados,pos_do_asp_X,pos_do_asp_Y):
 		self.atual = Ambiente(num_quadrados)
 		self.pos_x = pos_do_asp_X
 		self.pos_y = pos_do_asp_Y
+		self.g = 0
+		self.h = self.calcula_heuristica()
+		self.f = self.g + self.h
 		self.estado_pai = None
