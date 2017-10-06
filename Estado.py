@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 from Ambiente import Ambiente
 
 class Estado:
@@ -6,6 +9,7 @@ class Estado:
 	f = 0
 	g = 0
 	h = 0
+	acao_realizada = ""
 
 	def explora_no(self):  # visualizar os estados possiveis a partir do atual
 		
@@ -20,6 +24,7 @@ class Estado:
 				est_auxiliar.h = est_auxiliar.calcula_heuristica()
 				est_auxiliar.g = self.g + 1
 				est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
+				est_auxiliar.acao_realizada = "Aspirar"
 				self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 
 		if(self.atual.getLocal_especifico(self.pos_x+1,self.pos_y) != None):
@@ -29,6 +34,7 @@ class Estado:
 			est_auxiliar.h = est_auxiliar.calcula_heuristica()
 			est_auxiliar.g = self.g + 1
 			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
+			est_auxiliar.acao_realizada = "Direita"
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 
 		if(self.atual.getLocal_especifico(self.pos_x-1,self.pos_y) != None):
@@ -38,6 +44,7 @@ class Estado:
 			est_auxiliar.h = est_auxiliar.calcula_heuristica()
 			est_auxiliar.g = self.g + 1
 			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
+			est_auxiliar.acao_realizada = "Esquerda"
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 		
 		if(self.atual.getLocal_especifico(self.pos_x,self.pos_y+1) != None):	
@@ -47,6 +54,7 @@ class Estado:
 			est_auxiliar.h = est_auxiliar.calcula_heuristica()
 			est_auxiliar.g = self.g + 1
 			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
+			est_auxiliar.acao_realizada = "Cima"
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 		
 		if(self.atual.getLocal_especifico(self.pos_x,self.pos_y-1) != None):
@@ -56,6 +64,7 @@ class Estado:
 			est_auxiliar.h = est_auxiliar.calcula_heuristica()
 			est_auxiliar.g = self.g + 1
 			est_auxiliar.f = est_auxiliar.h + est_auxiliar.g
+			est_auxiliar.acao_realizada = "Baixo"
 			self.estados_possiveis.append(est_auxiliar) #adiciona ele aos estados possiveis
 
 		return self.estados_possiveis
@@ -131,6 +140,7 @@ class Estado:
 		for e in est.atual.locais:
 			print "[ x:"+str(e.x)+" y: "+str(e.y)+" sujo: "+str(e.sujo)+" ]"
 		print "[Agente: x:" +str(est.pos_x)+ " y:" + str(est.pos_y) + "]"
+		print "Ação tomada: " + str(est.acao_realizada)
 		print "[F:" + str(self.f) + " G: " + str(self.g) + " H:" +str(self.h) + " ]\n"
 
 	def visualizar_estado_atual(self):
@@ -171,3 +181,4 @@ class Estado:
 		self.h = self.calcula_heuristica()
 		self.f = self.g + self.h
 		self.estado_pai = None
+		self.acao_realizada = "root"

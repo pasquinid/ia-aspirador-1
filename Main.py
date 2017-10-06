@@ -115,7 +115,7 @@ def processa_nos(busca, astar):
     mostra_caminho(busca.nos_coloridos)
 
 def main():
-    estado_inicial = Estado(8, 0, 0)
+    estado_inicial = Estado(4, 0, 0)
     print "Visualizando estado criado\n"
     estado_inicial.visualizar_estado(estado_inicial)
 
@@ -123,15 +123,18 @@ def main():
 
     print "=======Busca em largura=========\n"
     processa_nos(largura, 0)
+    print "Numero de nós gerados: " + str(len(largura.borda) + len(largura.nos_coloridos))
 
     profundidade = Profundidade(estado_inicial)
 
     print "======Busca em Profundidade=====\n"
     processa_nos(profundidade, 0)
+    print "Numero de nós gerados: " + str(len(profundidade.borda) + len(profundidade.nos_coloridos))
 
     astar = Astar(estado_inicial)
     print "======Busca Astar=================\n"
     processa_nos(astar, 1)
+    print "Numero de nós gerados: " + str(len(astar.borda) + len(astar.nos_coloridos))
 
 
 
