@@ -138,4 +138,4 @@ class Estado:
 		self.atual = Ambiente(num_quadrados)
 		self.pos_x = pos_do_asp_X
 		self.pos_y = pos_do_asp_Y
-		self.estado_pai = 'raiz'
+		self.estado_pai = None
