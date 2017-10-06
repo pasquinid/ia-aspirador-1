@@ -115,7 +115,7 @@ def processa_nos(busca, astar):
     mostra_caminho(busca.nos_coloridos)
 
 def main():
-    estado_inicial = Estado(4, 0, 0)
+    estado_inicial = Estado(8, 0, 0)
     print "Visualizando estado criado\n"
     estado_inicial.visualizar_estado(estado_inicial)
 

@@ -27,15 +27,14 @@ class Ambiente:
 		if(num_quadrados%2 != 0):
 			print("Valor impar!")
 			return
+
 		self.num_quadrados = num_quadrados
-		tam_x = int(math.sqrt(num_quadrados))
-		tam_y = num_quadrados - tam_x
-		
+
+		tam_x = int(math.floor(math.sqrt(num_quadrados)))
+		tam_y = num_quadrados/tam_x
+
 		self.rx = range(tam_x)
 		self.ry = range(tam_y)
-		
-		if(num_quadrados == 2):
-			self.rx.append(1)
 		
 		self.locais = [Quadrado(True,0,0) for i in range(num_quadrados)]
 		
